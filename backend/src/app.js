@@ -1,6 +1,8 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const routes = require('./routes');
+const { environment } = require('./config');
+const isProduction = environment === 'production';
 
 const app = express();
 app.use(express.json());

@@ -1,8 +1,8 @@
 const router = require('express').Router();
+const testRouter = require('./test');
 
-const apiRouter = require('./api');
-// Register the API routes
-router.use('/api', apiRouter);
+
+
 
 // Catch unhandled requests and forward to error handler.
 router.use((_req, _res, next) => {
@@ -12,6 +12,9 @@ router.use((_req, _res, next) => {
   err.status = 404;
   next(err);
 });
+
+router.use('/test', testRouter);
+
 // Error formatter
 router.use((err, _req, res, _next) => {
   res.status(err.status || 500);
