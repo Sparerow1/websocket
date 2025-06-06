@@ -1,9 +1,9 @@
 const router = require('express').Router();
 const testRouter = require('./test');
-
-
+const websocketStatusRouter = require('./websocketStatus');
 
 router.use('/test', testRouter);
+router.use('/websocketStatus', websocketStatusRouter);
 
 // Catch unhandled requests and forward to error handler.
 router.use((_req, _res, next) => {
