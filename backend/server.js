@@ -24,11 +24,7 @@ wss.on('connection', (ws, req) => {
       // broadcast the message to all connected clients
       wss.clients.forEach(client => {
         if (client.readyState === client.OPEN) {
-          client.send(JSON.stringify({
-            type: 'message',
-            data: message,
-            timestamp: new Date().toISOString()
-          }));
+          client.send(message.data);
         }
       });
 

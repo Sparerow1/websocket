@@ -20,7 +20,12 @@
     });
     function sendMessage(event) {
       var inputMessage = document.getElementById('message')
-      webSocket.send(inputMessage.value)
+      webSocket.send(
+        JSON.stringify({
+          type: "message",
+          data: inputMessage.value,
+          timestamp: new Date().toISOString()
+        }));
       inputMessage.value = ""
       event.preventDefault();
     }
