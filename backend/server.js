@@ -18,6 +18,19 @@ wss.on('connection', (ws, req) => {
   // handle incoming messages from clients
   ws.on('message', (data) => {
     try { 
+      const message = JSON.parse(data);
+      console.log('Received message:', message);
+
+      // broadcast the message to all connected clients
+      wss.clients.forEach(client => {
+        if (client.readyState === client.OPEN) {
+          client.send(JSON.stringify({
+            type: 'message',
+            data: message,
+            timestamp: new Date().toISOString()
+          }));
+        }
+      });
 
     } catch (error) {
       console.error('Error processing message:', error);
