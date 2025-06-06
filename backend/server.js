@@ -41,9 +41,26 @@ wss.on('connection', (ws, req) => {
       }));
     }
   })
+
+  // handle client disconnection
+  ws.on('close', () => {
+    console.log('Client disconnected');
+  });
+  ws.on('error', (error) => {
+    console.error('WebSocket error:', error);
+  });
+
+  ws.on('ping', () => {
+    console.log('Received ping from client');
+    ws.pong(); // respond to ping with pong
+  });
   
 });
 
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
+server.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+  console.log(`WebSocket server is running on ws://localhost:${port}`);
 });
+
+// Export the server for testing purposes
+module.exports = server;
