@@ -3,6 +3,7 @@ const testRouter = require('./test');
 
 
 
+router.use('/test', testRouter);
 
 // Catch unhandled requests and forward to error handler.
 router.use((_req, _res, next) => {
@@ -12,8 +13,6 @@ router.use((_req, _res, next) => {
   err.status = 404;
   next(err);
 });
-
-router.use('/test', testRouter);
 
 // Error formatter
 router.use((err, _req, res, _next) => {
