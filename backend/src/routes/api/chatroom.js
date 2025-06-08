@@ -1,11 +1,10 @@
-const app = require('../../app');
-
 const router = require('express').Router();
 
 const chatRooms = new Map();
 const users = new Map();
 
-app.get('/api/rooms', (req, res) => {
+// GET /api/rooms - Get all rooms
+router.get('/rooms', (req, res) => {
     const rooms = Array.from(chatRooms.keys()).map(roomId => ({
         id: roomId,
         name: roomId,
@@ -14,7 +13,8 @@ app.get('/api/rooms', (req, res) => {
     res.json({ rooms });
 });
 
-app.post('/api/rooms', (req, res) => {
+// POST /api/rooms - Create new room
+router.post('/rooms', (req, res) => {
     const { roomName } = req.body;
     if (!chatRooms.has(roomName)) {
         chatRooms.set(roomName, []);
@@ -24,7 +24,8 @@ app.post('/api/rooms', (req, res) => {
     }
 });
 
-app.get('/api/rooms/:roomId/messages', (req, res) => {
+// GET /api/rooms/:roomId/messages - Get messages from specific room
+router.get('/rooms/:roomId/messages', (req, res) => {
     const { roomId } = req.params;
     const { limit = 50, offset = 0 } = req.query;
     
@@ -38,7 +39,8 @@ app.get('/api/rooms/:roomId/messages', (req, res) => {
     });
 });
 
-app.delete('/api/rooms/:roomId', (req, res) => {
+// DELETE /api/rooms/:roomId - Delete specific room
+router.delete('/rooms/:roomId', (req, res) => {
     const { roomId } = req.params;
     if (chatRooms.has(roomId)) {
         chatRooms.delete(roomId);

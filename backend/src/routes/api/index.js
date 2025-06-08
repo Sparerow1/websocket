@@ -1,9 +1,12 @@
 const router = require('express').Router();
 const testRouter = require('./test');
 const websocketStatusRouter = require('./websocketStatus');
+const chatRoomsRouter = require('./chatroom');
+// This file sets up the main API routes for the application. 
 
 router.use('/test', testRouter);
 router.use('/websocketStatus', websocketStatusRouter);
+router.use('/', chatRoomsRouter);
 
 // Catch unhandled requests and forward to error handler.
 router.use((_req, _res, next) => {
