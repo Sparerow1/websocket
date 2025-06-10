@@ -15,6 +15,7 @@ router.get('/rooms', (req, res) => {
 
 // POST /api/rooms - Create new room
 router.post('/rooms', (req, res) => {
+
     const { roomName } = req.body;
     if (!chatRooms.has(roomName)) {
         chatRooms.set(roomName, []);
@@ -22,6 +23,29 @@ router.post('/rooms', (req, res) => {
     } else {
         res.status(400).json({ error: 'Room already exists' });
     }
+});
+
+router.post('/rooms/:roomId/messages', (req, res) => {
+    const { roomId } = req.params;
+    const { userId, content } = req.body;
+
+    if (!chatRooms.has(roomId)) {
+        return res.status(404).json({ error: 'Room not found' });
+    }
+
+    if (!users.has(userId)) {
+        return res.status(400).json({ error: 'User not found' });
+    }
+
+    const message = {
+        userId,
+        content,
+        timestamp: new Date().toISOString()
+    };
+
+    chatRooms.get(roomId).push(message);
+    
+    res.json({ success: true, message });
 });
 
 // GET /api/rooms/:roomId/messages - Get messages from specific room
