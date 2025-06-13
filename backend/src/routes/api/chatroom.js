@@ -3,6 +3,9 @@ const router = require('express').Router();
 const chatRooms = new Map();
 const users = new Map();
 
+users.set('user1', { id: 'user1', name: 'Alice' });
+users.set('user2', { id: 'user2', name: 'Bob' });
+
 // GET /api/rooms - Get all rooms
 router.get('/rooms', (req, res) => {
     const rooms = Array.from(chatRooms.keys()).map(roomId => ({
