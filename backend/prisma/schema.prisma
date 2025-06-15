@@ -38,7 +38,9 @@ model Message {
   chatroom  Chatroom @relation(fields: [chatroomId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-  User User[]
+  user User@relation(fields: [userId], references: [id])
+  userId    String
+  @@index([chatroomId, createdAt], name: "chatroom_messages_index")
+  @@index([userId, createdAt], name: "user_messages_index")
 }
 
